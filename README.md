@@ -1,4 +1,4 @@
-Turtle_racing_bet README
+# Turtle_racing_bet README
 Overview
 
 Turtle_racing_bet is a program that allows a user to bet on a desired amount of turtles 
