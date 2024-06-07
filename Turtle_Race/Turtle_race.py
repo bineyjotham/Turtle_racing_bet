@@ -1,8 +1,9 @@
 import time
 import turtle
 import random
-from playsound import playsound
+import os
 
+from playsound import playsound
 
 WIDTH, HEIGHT = 500, 500
 COLOR = ['red', 'blue', 'cyan', 'brown', 'pink', 'green', 'yellow', 'black', 'orange', 'purple']
@@ -34,7 +35,7 @@ def racing(colors):
                 distance = random.randrange(1, 20)
                 racer.forward(distance)
                 x, y = racer.pos()
-                if y >= HEIGHT//2 - 10:
+                if y >= HEIGHT // 2 - 10:
                     ref_no = turtles.index(racer)
                     return colors[turtles.index(racer)], ref_no
     finally:
@@ -50,7 +51,7 @@ def create_turtle(colors):
         racer.shape('turtle')
         racer.left(90)
         racer.penup()
-        racer.setpos(-WIDTH//2 + (i + 1) * spacing_x, (-HEIGHT//2 + 10))
+        racer.setpos(-WIDTH // 2 + (i + 1) * spacing_x, (-HEIGHT // 2 + 10))
         racer.pendown()
         turtles.append(racer)
         turtle.TurtleScreen._RUNNING = True
@@ -89,7 +90,10 @@ def get_bet(balance):
 
 
 def play(balance):
+    current_dir = os.getcwd()
+    file_path = current_dir + "\Space Adventure.mp3"
     bet, racers, amount = get_bet(balance)
+    rest_of_amount = balance - amount
     random.shuffle(COLOR)
     colors = COLOR[:racers]
     turtle_list = [list((i, colors[i])) for i in range(len(colors))]
@@ -106,11 +110,10 @@ def play(balance):
                 if choice == ref_no:
                     print(f"\t\t\tCONGRATULATIONS, YOU ARE AMAZING!!!")
                     print(f"\t\t\tYou won: ${bet}")
-                    new_amount = balance + bet
-                    playsound("2021-12-14_-_Space_Adventure_Intro_-_David_Fesliyan.mp3")
+                    new_amount = rest_of_amount + bet
+                    playsound(file_path)
                     return new_amount
                 else:
-                    rest_of_amount = balance - amount
                     print(f"\t\t\tSORRY, YOU LOST!! YOU CAN TRY AGAIN NEXT TIME")
                     return rest_of_amount
             else:
